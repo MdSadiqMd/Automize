@@ -1,10 +1,15 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
+import bodyParser from 'body-parser';
 
 import { serverConfig, logger } from './config';
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+
 const client = new PrismaClient();
 
 app.post('/hooks/catch/:userId/:taskId', async (req: Request, res: Response) => {
